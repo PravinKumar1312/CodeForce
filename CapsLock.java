@@ -2,47 +2,48 @@ import java.util.Scanner;
 
 public class CapsLock {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String word = scanner.next();
-        char[] chars = word.toCharArray();
-        boolean allUpper = true;
-        boolean exceptFirst = true;
+        Scanner sc = new Scanner(System.in);
+        String word = sc.next();
+        sc.close();
 
-        for (char c : chars) {
-            if (!Character.isUpperCase(c)) {
+        if (shouldToggle(word)) {
+            // Toggle case for entire word
+            StringBuilder result = new StringBuilder();
+            for (char c : word.toCharArray()) {
+                if (Character.isUpperCase(c)) {
+                    result.append(Character.toLowerCase(c));
+                } else {
+                    result.append(Character.toUpperCase(c));
+                }
+            }
+            System.out.println(result.toString());
+        } else {
+            System.out.println(word);
+        }
+    }
+
+    private static boolean shouldToggle(String word) {
+        int n = word.length();
+
+        // Case 1: All letters are uppercase
+        boolean allUpper = true;
+        for (int i = 0; i < n; i++) {
+            if (!Character.isUpperCase(word.charAt(i))) {
                 allUpper = false;
                 break;
             }
         }
+        if (allUpper)
+            return true;
 
-        if (allUpper) {
-            for (int i = 0; i < chars.length; i++) {
-                chars[i] = Character.toLowerCase(chars[i]);
+        // Case 2: All except the first are uppercase
+        boolean firstLowerRestUpper = Character.isLowerCase(word.charAt(0));
+        for (int i = 1; i < n; i++) {
+            if (!Character.isUpperCase(word.charAt(i))) {
+                firstLowerRestUpper = false;
+                break;
             }
-            System.out.println(new String(chars));
-            // return;
         }
-
-        if (Character.isLowerCase(chars[0])) {
-            for (int i = 1; i < chars.length; i++) {
-                if (!Character.isUpperCase(chars[i])) {
-                    exceptFirst = false;
-                    break;
-                }
-            }
-        } else {
-            exceptFirst = false;
-        }
-
-        if (exceptFirst) {
-            chars[0] = Character.toUpperCase(chars[0]);
-            for (int i = 1; i < chars.length; i++) {
-                chars[i] = Character.toLowerCase(chars[i]);
-            }
-            System.out.println(new String(chars));
-        } else {
-            System.out.println(word);
-        }
-        scanner.close();
+        return firstLowerRestUpper;
     }
 }
