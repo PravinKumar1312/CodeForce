@@ -5,6 +5,7 @@ public class Translation {
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
         String t = scanner.nextLine();
+        scanner.close();
 
         if (s.length() != t.length()) {
             System.out.println("NO");
@@ -19,6 +20,5 @@ public class Translation {
             System.out.println("NO");
         }
 
-        scanner.close();
     }
 }

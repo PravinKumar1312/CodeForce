@@ -7,6 +7,7 @@ public class KefaAndFirstSteps {
         int[] arr = new int[n];
         for (int i = 0; i < n; i++) {
             arr[i] = sc.nextInt();
+            sc.close();
         }
 
         if (n == 1) {
@@ -30,6 +31,5 @@ public class KefaAndFirstSteps {
         }
 
         System.out.println(maxLength);
-        sc.close();
     }
 }
