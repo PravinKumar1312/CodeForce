@@ -7,42 +7,54 @@ public class LectureSleep {
         int n = sc.nextInt();
         int k = sc.nextInt();
 
-        int[] a = new int[n];
-        int[] t = new int[n];
+        int[] theorems = new int[n];
+        int[] behavior = new int[n];
 
-        for (int i = 0; i < n; i++)
-            a[i] = sc.nextInt();
-        for (int i = 0; i < n; i++)
-            t[i] = sc.nextInt();
-
-        long[] prefix = new long[n + 1];
-        for (int i = 1; i <= n; i++) {
-            prefix[i] = prefix[i - 1] + a[i - 1];
-        }
-
-        long base = 0;
+        // Read theorems
         for (int i = 0; i < n; i++) {
-            if (t[i] == 1) {
-                base += a[i];
+            theorems[i] = sc.nextInt();
+        }
+
+        // Read behavior
+        for (int i = 0; i < n; i++) {
+            behavior[i] = sc.nextInt();
+        }
+
+        // Calculate base theorems (when Mishka is naturally awake)
+        int baseTheorems = 0;
+        for (int i = 0; i < n; i++) {
+            if (behavior[i] == 1) {
+                baseTheorems += theorems[i];
             }
         }
 
-        long maxGain = 0;
-        for (int i = 0; i <= n - k; i++) {
-            long windowSum = prefix[i + k] - prefix[i];
-
-            long actualGain = 0;
-            for (int j = i; j < i + k; j++) {
-                if (t[j] == 1) {
-                    actualGain += a[j];
-                }
+        // Calculate gain for first window [0, k-1]
+        int windowGain = 0;
+        for (int i = 0; i < k; i++) {
+            if (behavior[i] == 0) {
+                windowGain += theorems[i];
             }
-
-            long gain = windowSum - actualGain;
-            maxGain = Math.max(maxGain, gain);
         }
 
-        System.out.println(base + maxGain);
+        int maxGain = windowGain;
+
+        // Slide the window and update maximum gain
+        for (int i = k; i < n; i++) {
+            // Remove element leaving the window
+            if (behavior[i - k] == 0) {
+                windowGain -= theorems[i - k];
+            }
+            // Add new element entering the window
+            if (behavior[i] == 0) {
+                windowGain += theorems[i];
+            }
+            maxGain = Math.max(maxGain, windowGain);
+        }
+
+        // Total = base theorems + maximum additional gain from technique
+        int result = baseTheorems + maxGain;
+        System.out.println(result);
+
         sc.close();
     }
 }
