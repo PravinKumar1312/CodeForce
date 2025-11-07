@@ -4,7 +4,8 @@ public class StringLCM {
 
     static String repeat(String s, int n) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < n; i++) sb.append(s);
+        for (int i = 0; i < n; i++)
+            sb.append(s);
         return sb.toString();
     }
 
@@ -31,6 +32,7 @@ public class StringLCM {
             else
                 System.out.println("-1");
         }
+        sc.close();
     }
 
     // Helper function to calculate LCM

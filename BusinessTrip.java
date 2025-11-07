@@ -10,6 +10,7 @@ public class BusinessTrip {
         for (int i = 0; i < 12; i++) {
             months[i] = scanner.nextInt();
         }
+        scanner.close();
 
         // If k is 0, no watering needed
         if (k == 0) {
@@ -37,7 +38,6 @@ public class BusinessTrip {
 
         // If we went through all months and still didn't reach k
         System.out.println(-1);
-        scanner.close();
 
     }
 }
